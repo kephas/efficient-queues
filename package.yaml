@@ -1,0 +1,54 @@
+name:                efficient-queues
+version:             0.1.0.0
+github:              "githubuser/efficient-queues"
+license:             BSD3
+author:              "Pierre Thierry"
+maintainer:          "pierre@nothos.net"
+copyright:           "2021 Pierre Thierry"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/efficient-queues#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+    - text
+    - monad-var
+    - protolude
+  default-extensions:
+    - NoImplicitPrelude
+
+executables:
+  efficient-queues-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - efficient-queues
+
+tests:
+  efficient-queues-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - efficient-queues
