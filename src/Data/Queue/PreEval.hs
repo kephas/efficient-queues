@@ -1,7 +1,9 @@
 module Data.Queue.PreEval where
 
 import qualified Data.List                     as L
-import           Data.Text               hiding ( empty )
+import           Data.Text               hiding ( empty
+                                                , foldl
+                                                )
 import           MonadVar
 import           Protolude               hiding ( empty
                                                 , length
@@ -23,6 +25,9 @@ showQueue (Queue front back unevaled) = do
 
 empty :: Queue a
 empty = Queue [] [] []
+
+fromFold :: Foldable t => t a -> Queue a
+fromFold = foldl insert empty
 
 length :: Queue a -> Int
 length (Queue front back _) = (L.length front) + (L.length back)

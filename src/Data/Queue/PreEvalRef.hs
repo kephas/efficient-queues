@@ -3,9 +3,10 @@
 module Data.Queue.PreEvalRef where
 
 import qualified Data.List                     as L
-import           Data.Text
+import           Data.Text               hiding ( empty )
 import           MonadVar
-import           Protolude               hiding ( length
+import           Protolude               hiding ( empty
+                                                , length
                                                 , rotate
                                                 )
 
@@ -35,6 +36,15 @@ showQueue queue = do
 
 empty :: MonadNew m v => m (Queue v a)
 empty = Queue <$> new [] <*> new [] <*> new []
+
+fromFold
+  :: (MonadNew m v, MonadRead m v, MonadMutate_ m v, Foldable t)
+  => t a
+  -> m (Queue v a)
+fromFold fold = do
+  queue <- empty
+  forM_ fold $ insert queue
+  pure queue
 
 length :: MonadRead m v => Queue v a -> m Int
 length queue = do
