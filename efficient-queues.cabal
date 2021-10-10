@@ -27,7 +27,6 @@ library
   exposed-modules:
       Data.Queue.PreEval
       Data.Queue.PreEvalRef
-      Lib
   other-modules:
       Paths_efficient_queues
   hs-source-dirs:
