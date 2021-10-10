@@ -1,9 +1,10 @@
 module Data.Queue.PreEval where
 
 import qualified Data.List                     as L
-import           Data.Text
+import           Data.Text               hiding ( empty )
 import           MonadVar
-import           Protolude               hiding ( length
+import           Protolude               hiding ( empty
+                                                , length
                                                 , rotate
                                                 )
 
@@ -30,8 +31,10 @@ insert :: Queue a -> a -> Queue a
 insert (Queue front back unevaled) element =
   balance $ Queue front (element : back) unevaled
 
-remove :: Queue a -> (a, Queue a)
-remove (Queue (f : fs) back unevaled) = (f, balance $ Queue fs back unevaled)
+remove :: Queue a -> (Maybe a, Queue a)
+remove (Queue (f : fs) back unevaled) =
+  (Just f, balance $ Queue fs back unevaled)
+remove (Queue [] [] []) = (Nothing, empty)
 
 balance :: Queue a -> Queue a
 balance (Queue front back (u : us)) = Queue front back us
