@@ -3,6 +3,7 @@
 module Data.Queue.PreEvalRef where
 
 import qualified Data.List                     as L
+import           Data.Queue.PreEval             ( rotate )
 import           Data.Text               hiding ( empty )
 import           MonadVar
 import           Protolude               hiding ( empty
@@ -80,12 +81,6 @@ balance queue = do
       write (front queue)    rotated
       write (back queue)     []
       write (unevaled queue) rotated
-
-
-
-rotate :: [a] -> [a] -> [a] -> [a]
-rotate []       (b : bs) acc = b : acc
-rotate (f : fs) (b : bs) acc = f : (rotate fs bs $ b : acc)
 
 
 
